@@ -4,6 +4,7 @@
 <head>
   <title>方方的个人简历</title>
   <link rel="stylesheet" href="./a.css">
+  <link rel="stylesheet" href="./loading.css">
   <script src="//at.alicdn.com/t/font_451045_32zbfqegtq3t0529.js"></script>
   <style type="text/css">
     .icon {
@@ -13,29 +14,75 @@
       fill: currentColor;
       overflow: hidden;
     }
+    /* 加载动画 */
+    .loadWrap{display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+              background: #666; justify-content: center; align-items: center; z-index: 1;}
+    .loadWrap.active{display: flex;}
+
+    /* topNavBar-鼠标滑动 */
+    .topNavBar.sticky{
+      background: white; z-index: 1; box-shadow: 0 0 15px rgba(0,0,0,0.25); 
+      padding: 10px 0px; color: #3d4451;}
+
+    /* 加红条 */
+    nav.navMenu > ul > li.active > a::after{
+      content: ''; display: block; position: absolute; top: 100%; left: 0; width: 100%;
+      height: 3px; background: #e06567; animation: redBar .3s;
+    }
+    @keyframes redBar{
+      0%{width: 0;}
+      100%{width: 100%;}
+    }
+
+    /* submenu 子菜单*/
+    nav.navMenu .submenu{
+      display: none; background: white; padding: 10px 15px; color: #3d4451; position: absolute;
+      top: 100%; right: 0; box-shadow: 0 0 7px rgba(0,0,0,0.25);
+    }
+    nav.navMenu > ul > li.active .submenu{
+      display: block; animation: submenu .3s;
+    }
+    @keyframes submenu{
+      0%{margin-right: 100%;}
+      100%{margin-right: 0;}
+    }
+
+
   </style>
 </head>
-
 <body>
-  <div class="topNavBar">
+  <div id="loadwrap" class="loadWrap active">
+    <div class="loading"></div>
+  </div>
+  <div id="topNavBar" class="topNavBar sticky">
     <div class="topNavBar-inner clearfix">
       <a class="logo" href="#" alt="logo" style="float: left;">
         <span class="rs">RS</span>
         <span class="card">card</span>
       </a>
-      <nav style="float: right;">
+      <nav class="navMenu" style="float: right;">
         <ul class="clearfix">
           <li>
-            <a href="#">关于</a>
+            <a href="#siteAbout">关于</a>
           </li>
           <li>
-            <a href="#">技能</a>
+            <a href="#siteSkills">技能</a>
           </li>
           <li>
-            <a href="#">作品</a>
+            <a href="#siteWorks">作品</a>
+            <ul class="submenu">
+              <li>work1</li>
+              <li>work2</li>
+              <li>work3</li>
+            </ul>
           </li>
           <li>
             <a href="#">博客</a>
+            <ul class="submenu">
+              <li>blog1</li>
+              <li>blog2</li>
+              <li>blog3</li>
+            </ul>
           </li>
           <li>
             <a href="#">日历</a>
@@ -53,7 +100,7 @@
   <div class="banner">
     <div class="mask"></div>
   </div>
-  <main style="">
+  <main id="siteAbout">
     <div class="userCard">
       <div class="pictureAndText clearfix">
         <div class="picture">
@@ -107,7 +154,7 @@
     </p>
 
   </main>
-  <section class="skills">
+  <section id="siteSkills" class="skills">
     <h2>技能</h2>
     <ol class="clearfix">
       <li>
@@ -118,8 +165,8 @@
           <div class="progress" style="width: 10%;"></div>
         </div>
       </li>
-      <li>
-        <h3>
+      <h3>
+        <li>
           JavaScript
         </h3>
         <div class="progressBar">
@@ -160,7 +207,7 @@
       </li>
     </ol>
   </section>
-  <section class="portfolio">
+  <section id="siteWorks" class="portfolio">
     <h2>作品集</h2>
     <nav>
       <ol class="clearfix">
@@ -198,6 +245,56 @@
     </div>
 
   </section>
+  <script>
+    // 加载动画
+    setTimeout(function(){
+      loadwrap.classList.remove('active')
+    },300)
+
+    // topNavBar-鼠标滑动动画
+    window.onscroll = function(){
+      window.scrollY > 0 ? topNavBar.classList.add('sticky') : topNavBar.classList.remove('sticky')
+    }
+
+    // 把底部红条换一下。提示：给 li 加 active。
+    let liTags = document.querySelectorAll('nav.navMenu > ul > li')
+    for(let i=0; i<liTags.length; i++){
+      liTags[i].onmouseenter = function(x){
+        x.currentTarget.classList.add('active')
+      }
+      liTags[i].onmouseleave = function(x){
+        x.currentTarget.classList.remove('active')
+      }
+    }
+
+    // 给 nav > ul > li 出子菜单。已完成。
+
+    // 点击跳转
+    let aTags = document.querySelectorAll('nav.navMenu > ul > li > a')
+    for(let i=0; i<aTags.length; i++){
+      aTags[i].onclick = function(x){
+        x.preventDefault()
+        let a = x.currentTarget
+        let href = a.getAttribute('href')
+        let element = document.querySelector(href)
+        let top = element.offsetTop
+        window.scrollTo(0,top - 120)
+      }
+    }
+
+    // let aTags = document.querySelectorAll('nav.navMenu > ul > li > a')
+    //   for(let i=0; i<aTags.length; i++){
+    //     aTags[i].onclick = function(x){
+    //       x.preventDefault()
+    //       let a = x.currentTarget
+    //       let href = a.getAttribute('href') //'#siteAbout'
+    //       let element = document.querySelector(href)
+    //       let top = element.offsetTop
+    //       window.scrollTo(0, top - 120)
+    //     }
+    // }
+
+  </script>
 </body>
 
 </html>
