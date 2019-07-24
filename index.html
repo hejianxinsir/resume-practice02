@@ -278,21 +278,25 @@
         let href = a.getAttribute('href')
         let element = document.querySelector(href)
         let top = element.offsetTop
-        window.scrollTo(0,top - 120)
+
+        //另
+        let n = 20
+        let t = 500 / n
+        let currentTop = window.scrollY
+        let targetTop = top - 80
+        let S = targetTop - currentTop
+        let s = S / n
+        let i = 0
+        let id = setInterval(()=>{
+          if(i===n){
+            window.clearInterval(id)
+            return
+          }
+          i = i + 1
+          window.scrollTo(0 , currentTop + s*i)
+        },t)
       }
     }
-
-    // let aTags = document.querySelectorAll('nav.navMenu > ul > li > a')
-    //   for(let i=0; i<aTags.length; i++){
-    //     aTags[i].onclick = function(x){
-    //       x.preventDefault()
-    //       let a = x.currentTarget
-    //       let href = a.getAttribute('href') //'#siteAbout'
-    //       let element = document.querySelector(href)
-    //       let top = element.offsetTop
-    //       window.scrollTo(0, top - 120)
-    //     }
-    // }
 
   </script>
 </body>
