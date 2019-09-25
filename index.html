@@ -3,8 +3,8 @@
 
 <head>
   <title>方方的个人简历</title>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
   <link rel="stylesheet" href="./a.css">
-  <link rel="stylesheet" href="./loading.css">
   <script src="//at.alicdn.com/t/font_451045_32zbfqegtq3t0529.js"></script>
   <style type="text/css">
     .icon {
@@ -14,12 +14,7 @@
       fill: currentColor;
       overflow: hidden;
     }
-    /* 加载动画 */
-    .loadWrap{display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-              background: #666; justify-content: center; align-items: center; z-index: 1;}
-    .loadWrap.active{display: flex;}
-
-    /* topNavBar-鼠标滑动 */
+   /* topNavBar-鼠标滑动 */
     .topNavBar.sticky{
       background: white; z-index: 1; box-shadow: 0 0 15px rgba(0,0,0,0.25); 
       padding: 10px 0px; color: #3d4451;}
@@ -46,15 +41,10 @@
       0%{margin-right: 100%;}
       100%{margin-right: 0;}
     }
-
-
   </style>
 </head>
 <body>
-  <div id="loadwrap" class="loadWrap active">
-    <div class="loading"></div>
-  </div>
-  <div id="topNavBar" class="topNavBar sticky">
+ <div id="topNavBar" class="topNavBar sticky">
     <div class="topNavBar-inner clearfix">
       <a class="logo" href="#" alt="logo" style="float: left;">
         <span class="rs">RS</span>
@@ -204,146 +194,30 @@
     </ol>
   </section>
   <section data-x id="siteWorks" class="portfolio">
-    <h2>作品集</h2>
-    <nav>
-      <ol class="clearfix">
-        <li id="portfolio1">所有</li>
-        <li id="portfolio2">框架</li>
-        <li id="portfolio3">原生JS&amp;CSS</li>
-      </ol>
-      <div id="portfolioBar" class="bar state-1">
-        <div class="bar-inner"></div>
-      </div>
-    </nav>
-    <script>
-      portfolio1.onclick= function(){
-        portfolioBar.className = 'bar state-1'
-      }
-      portfolio2.onclick= function(){
-        portfolioBar.className = 'bar state-2'
-      }
-      portfolio3.onclick= function(){
-        portfolioBar.className = 'bar state-3'
-      }
-    </script>
-
-
-    <div class="works" style="height: 597px;">
-      <div class="big" style="top: 0; left: 0;">
-        <img src="./img/1.jpg" alt="作品1">
-      </div>
-      <div class="small" style="top: 0; left: 645px;">
-        <img src="./img/2.jpg" alt="作品2">
-      </div>
-      <div class="small" style="top: 312px; left: 645px;">
-        <img src="./img/3.jpg" alt="作品3">
-      </div>
-    </div>
-
+    	<h2>作品集</h2>
+	  <!-- Slider main container -->
+	<div class="swiper-container">
+	    <!-- Additional required wrapper -->
+	    <div class="swiper-wrapper">
+		<!-- Slides -->
+		<img src="./img/keypress-edited.jpg" class="swiper-slide">
+		<img src="./img/canvas-edited.jpg"  class="swiper-slide">
+		<img src="./img/slides-edited.jpg"  class="swiper-slide">
+	    </div>
+	    <!-- If we need pagination -->
+	    <div class="swiper-pagination"></div>
+	</div> 
+	<!-- If we need navigation buttons -->
+	<div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
   </section>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.4.0/Tween.min.js"></script>
-  <script>
-    // 加载动画
-    setTimeout(function(){
-      loadwrap.classList.remove('active')
-    },10)
-
-    // topNavBar-鼠标滑动动画
-
-    // 添加 offset 类
-    let specialTags = document.querySelectorAll('[data-x]') //获取三大区域，关于 作品 博客
-    for(i=0; i<specialTags.length; i++){
-      specialTags[i].classList.add('offset')
-    }
-
-    setTimeout(function(){
-      findClosest()
-    },50)
-    
-    window.onscroll = function(x){
-      window.scrollY > 0 ? topNavBar.classList.add('sticky') : topNavBar.classList.remove('sticky')
-      findClosest()
-    }
-
-    function findClosest(){
-      let specialTags = document.querySelectorAll('[data-x]') //获取三大区域，关于 作品 博客
-      let minIndex = 0
-      for(i=1; i<specialTags.length; i++){
-        if(Math.abs(specialTags[i].offsetTop - window.scrollY) < Math.abs(specialTags[minIndex].offsetTop - window.scrollY)){
-          minIndex = i
-        }
-      }
-      for(let i=0; i<specialTags.length; i++){
-        specialTags[i].classList.remove('active')
-      }
-      specialTags[minIndex].classList.add('active')
-      // 上面的一片代码，是找到离页面最近的那个元素，把其他两个干掉，给对应的那个加 active
-      specialTags[minIndex].classList.remove('offset')
-      let id = specialTags[minIndex].id
-      let a = document.querySelector('a[href="#'+ id +'"]')  // 通过 id 找 a 标签，通过 a 标签找 父元素 li ，通过 li 找同类元素，把同类其他元素干掉，只给自己 active
-      let li = a.parentNode 
-      let brothersAndMe = li.parentNode.children
-      for(let i=0; i<brothersAndMe.length; i++){
-        brothersAndMe[i].classList.remove('highLight')
-      }
-      li.classList.add('highLight')
-    }
-
-    // 把底部红条换一下。提示：给 li 加 active。
-    let liTags = document.querySelectorAll('nav.navMenu > ul > li')
-    for(let i=0; i<liTags.length; i++){
-      liTags[i].onmouseenter = function(x){
-        x.currentTarget.classList.add('active')
-      }
-      liTags[i].onmouseleave = function(x){
-        x.currentTarget.classList.remove('active')
-      }
-    }
-
-    // 给 nav > ul > li 出子菜单。已完成。
-
-    // Setup the animation loop.
-    function animate(time) {
-        requestAnimationFrame(animate);
-        TWEEN.update(time);
-    }
-    requestAnimationFrame(animate);
-
-    
-
-    // 点击跳转
-    let aTags = document.querySelectorAll('nav.navMenu > ul > li > a')
-    for(let i=0; i<aTags.length; i++){
-      aTags[i].onclick = function(x){
-        x.preventDefault()
-        let a = x.currentTarget
-        let href = a.getAttribute('href')
-        let element = document.querySelector(href)
-        let top = element.offsetTop
-
-        //另
-        let currentTop = window.scrollY
-        let targetTop = top - 80
-        let s = targetTop - currentTop
-        let t = Math.abs((s/100)*300)
-        if(t > 500){
-          t = 500
-        }
-        // 以下是引入的东西
-        const coords = { y: currentTop}; 
-        const tween = new TWEEN.Tween(coords) 
-        .to({ y: targetTop}, t) 
-        .easing(TWEEN.Easing.Quadratic.InOut) 
-        // Use an easing function to make the animation smooth.
-        .onUpdate(() => { 
-          window.scrollTo(0 , coords.y)
-        })
-        .start(); // Start the tween immediately.
-
-      }
-    }
-
-  </script>
+  <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+  <script src="./init-Swiper.js"></script>
+  <script src="./topSticky.js"></script>
+  <script src="./addAndRemoveOffset.js"></script>
+  <script src="./topMenuRedBar.js"></script>
+  <script src="./clickMenuMove.js"></script>
 </body>
 
 </html>
