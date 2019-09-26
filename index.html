@@ -212,11 +212,13 @@
         <div class="swiper-button-next"></div>
   </section>
   
-  <section>
-	<h2 style="text-align: center;">留言</h2>
+  <section class="messages">
+	<h2>留言</h2>
 	<ul id="messagesList"></ul>
-	<form id="leaveMessagesForm" style="width: 700px; height: 300px; margin: 20px auto; border: 1px solid red;">
-
+	<form id="leaveMessagesForm" style="width: 700px; height: 300px; margin: 20px auto; border: 1px solid brown;">
+		<label for="">Name: </label>
+		<input type="text" name="name">
+		<label for="">Content: </label>
 		<input type="text" name="content">
 		<input type="submit" value="submit">
 	</form>

@@ -125,12 +125,32 @@ section.portfolio{
   margin-top: 60px;
 }
 section.skills > h2 ,
-section.portfolio > h2 {
+section.portfolio > h2 , section.messages{
   text-align: center;
   color: #3d4451;
   font-size: 34px;
   line-height: 1.2;
   font-weight: 600;
+}
+section.messages label{ font-size: 20px;}
+section.messages ul{
+	text-align: left;
+	max-width: 600px;
+	margin: 15px auto;
+	border-top: 1px solid #ddd;
+	padding: 10px;
+}
+section.messages ul > li{
+	padding: 21px 16px;	
+	border-bottom: 1px solid #ddd;
+}
+section.messages> ul{
+	color: black;
+	font-size: 16px;
+	font-weight: normal;
+}
+section.message > form{
+	width: 200px;	
 }
 section.skills h3 {
   font-size: 14px;
@@ -229,7 +249,6 @@ section.portfolio .works > .big,
 section.portfolio .works > .small {
   position: absolute;
 }
-
 .swiper-container {
     width: 760px;
     height: 570px;
@@ -245,3 +264,4 @@ section.portfolio .works > .small {
 	background: #e6686a;
 	color: white;
 }
+
